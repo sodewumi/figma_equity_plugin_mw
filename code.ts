@@ -36,20 +36,20 @@ function calculateWidth(growthMultiplier: number, times: number) {
 // posted message.
 figma.ui.onmessage = msg => {
   if (msg.type === 'equity') {
-    const useVal = figma.getNodeById('94:388') as TextNode
+    const useVal = figma.currentPage.findOne(n => n.name === "plugin_equity_copy") as TextNode
 
     const xCoordinates = [
-      figma.getNodeById('94:291') as TextNode,
-      figma.getNodeById('94:292') as TextNode,
-      figma.getNodeById('94:293') as TextNode,
-      figma.getNodeById('94:294') as TextNode
+      figma.currentPage.findOne(n => n.name === "plugin_x_one") as TextNode,
+      figma.currentPage.findOne(n => n.name === "plugin_x_two") as TextNode,
+      figma.currentPage.findOne(n => n.name === "plugin_x_three") as TextNode,
+      figma.currentPage.findOne(n => n.name === "plugin_x_four") as TextNode
     ]
 
     const barWidths = [
-      figma.getNodeById('94:281') as GroupNode,
-      figma.getNodeById('94:378') as GroupNode,
-      figma.getNodeById('94:381') as GroupNode,
-      figma.getNodeById('94:384') as GroupNode,
+      figma.currentPage.findOne(n => n.name === "plugin_bar_one") as GroupNode,
+      figma.currentPage.findOne(n => n.name === "plugin_bar_two") as GroupNode,
+      figma.currentPage.findOne(n => n.name === "plugin_bar_three") as GroupNode,
+      figma.currentPage.findOne(n => n.name === "plugin_bar_four") as GroupNode,
     ]
 
     figma.loadFontAsync({ family: "Whyte", style: "Regular" }).then(() => {

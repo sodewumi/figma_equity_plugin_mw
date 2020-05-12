@@ -28,18 +28,18 @@ function calculateWidth(growthMultiplier, times) {
 // posted message.
 figma.ui.onmessage = msg => {
     if (msg.type === 'equity') {
-        const useVal = figma.getNodeById('94:388');
+        const useVal = figma.currentPage.findOne(n => n.name === "plugin_equity_copy");
         const xCoordinates = [
-            figma.getNodeById('94:291'),
-            figma.getNodeById('94:292'),
-            figma.getNodeById('94:293'),
-            figma.getNodeById('94:294')
+            figma.currentPage.findOne(n => n.name === "plugin_x_one"),
+            figma.currentPage.findOne(n => n.name === "plugin_x_two"),
+            figma.currentPage.findOne(n => n.name === "plugin_x_three"),
+            figma.currentPage.findOne(n => n.name === "plugin_x_four")
         ];
         const barWidths = [
-            figma.getNodeById('94:281'),
-            figma.getNodeById('94:378'),
-            figma.getNodeById('94:381'),
-            figma.getNodeById('94:384'),
+            figma.currentPage.findOne(n => n.name === "plugin_bar_one"),
+            figma.currentPage.findOne(n => n.name === "plugin_bar_two"),
+            figma.currentPage.findOne(n => n.name === "plugin_bar_three"),
+            figma.currentPage.findOne(n => n.name === "plugin_bar_four"),
         ];
         figma.loadFontAsync({ family: "Whyte", style: "Regular" }).then(() => {
             xCoordinates.forEach((xCoordinate, i) => xCoordinate.characters = `$${calculateXCoor(msg.growthMultiplier, i + 1)}`);
