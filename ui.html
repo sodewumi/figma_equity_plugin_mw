@@ -1,0 +1,20 @@
+<h2>Growth Calculator</h2>
+<p>How many options have I been granted: <input id="options" value="0"></p>
+<p>What is Figma's growth: <input id="growth" value="1"></p>
+<button id="calculate">Calculate</button>
+<button id="cancel">Cancel</button>
+<script>
+
+document.getElementById('calculate').onclick = () => {
+  const optionsTextbox = document.getElementById('options');
+  const optionsCount = parseInt(optionsTextbox.value, 10);
+  const growthTextbox = document.getElementById('growth');
+  const growthMultiplier = parseInt(growthTextbox.value, 10);
+  parent.postMessage({ pluginMessage: { type: 'equity', growthMultiplier, optionsCount } }, '*')
+}
+
+document.getElementById('cancel').onclick = () => {
+  parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
+}
+
+</script>
