@@ -1,20 +1,39 @@
-<h2>Growth Calculator</h2>
-<p>How many options have I been granted: <input id="options" value="0"></p>
-<p>What is Figma's growth: <input id="growth" value="1"></p>
-<button id="calculate">Calculate</button>
-<button id="cancel">Cancel</button>
+<p>2021 Growth %: <input id="2021" value="175%"></p>
+<p>2022 Growth %: <input id="2022" value="70%"></p>
+<p>2023 Growth %: <input id="2023" value="50%"></p>
+<p>2024 Growth %: <input id="2024" value="40%"></p>
+<p>Multiplier: <input id="multiplier" value="10"></p>
+
 <script>
+  callback = () => {
+    extractGrowth = (id) => {
+      const inputElement = document.getElementById(id);
+      // Remove % from end of input.
+      const input = inputElement.value.slice(0, -1)
+      // 50% growth -> 1.5x
+      const growth = 1.0 + (parseInt(input, 10) / 100.0)
+      return growth
+    }
 
-document.getElementById('calculate').onclick = () => {
-  const optionsTextbox = document.getElementById('options');
-  const optionsCount = parseInt(optionsTextbox.value, 10);
-  const growthTextbox = document.getElementById('growth');
-  const growthMultiplier = parseInt(growthTextbox.value, 10);
-  parent.postMessage({ pluginMessage: { type: 'equity', growthMultiplier, optionsCount } }, '*')
-}
+    growth2021 = extractGrowth('2021')
+    growth2022 = extractGrowth('2022')
+    growth2023 = extractGrowth('2023')
+    growth2024 = extractGrowth('2024')
+    multiplier = parseInt(document.getElementById('multiplier').value, 10)
+    if (multiplier == 0 || isNaN(growth2021) || isNaN(growth2022) || isNaN(growth2023) || isNaN(growth2024)) {
+      return
+    }
+    parent.postMessage({ pluginMessage: { type: 'growth', growth2021, growth2022, growth2023, growth2024, multiplier } }, '*')
+  }
 
-document.getElementById('cancel').onclick = () => {
-  parent.postMessage({ pluginMessage: { type: 'cancel' } }, '*')
-}
-
+  document.getElementById('2021').onchange = callback
+  document.getElementById('2021').onkeyup = callback
+  document.getElementById('2022').onchange = callback
+  document.getElementById('2022').onkeyup = callback
+  document.getElementById('2023').onchange = callback
+  document.getElementById('2023').onkeyup = callback
+  document.getElementById('2024').onchange = callback
+  document.getElementById('2024').onkeyup = callback
+  document.getElementById('multiplier').onchange = callback
+  document.getElementById('multiplier').onkeyup = callback
 </script>

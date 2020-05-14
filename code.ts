@@ -58,6 +58,23 @@ figma.ui.onmessage = msg => {
     })
 
     barWidths.forEach((bar, i) => bar.resize(calculateWidth(msg.growthMultiplier, i + 1), bar.height))
+  } else if (msg.type === 'storyboard') {
+    const HEIGHT_OF_LABEL = 45
+    const groupNode = figma.currentPage.findOne(n => n.name === "RevenueGraph") as GroupNode
+
+    // Calculate the starting revenue number by reading the 2020 pixel height 
+    // (minus the spacing for the label underneath).
+    const startRevenue = groupNode.findChild(n => n.name === "2020").height - HEIGHT_OF_LABEL
+    console.log("start revenue is: ", startRevenue)
+
+    const updateRevenue = (name: string, year: number) => {
+      const revenue = startRevenue * Math.pow(1.0 + msg.growthYOY, year)
+      const node = groupNode.findChild(n => n.name === name) as InstanceNode
+      node.resize(node.width, HEIGHT_OF_LABEL + revenue)
+    }
+
+    updateRevenue("2021", 1)
+    updateRevenue("2022", 2)
   }
 
   // Make sure to close the plugin when you're done. Otherwise the plugin will
